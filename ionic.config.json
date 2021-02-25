@@ -1,0 +1,7 @@
+{
+  "name": "ordoresto",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
