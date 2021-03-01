@@ -1,20 +1,226 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			<div class="d-flex">
+				<div class="logo">
+					<img src="assets/images/logo.png">
+				</div>
+				<div class="end">
+					<!-- <div class="search_box d-flex">
+						<ion-icon class="zmdi zmdi-search ion-text-center"></ion-icon>
+						<ion-searchbar class="ion-no-padding" searchIcon="hide"
+							placeholder="{{'Rechercher...'}}"></ion-searchbar>
+					</div> -->
+
+            <ion-fab vertical="top" horizontal="end" slot="fixed">
+              <ion-fab-button color="transparent" (click)="openCart()" #cart>
+                <h5 class="ion-text-center">
+            <ion-icon name="cart-outline"></ion-icon>
+            <ion-badge>{{cartItemCount | async}}</ion-badge>
+          </h5>
+          </ion-fab-button>
+          </ion-fab>
+
+				</div>
+			</div>
+		</ion-title>
+	</ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="bg_color">
+	<div class="container d-flex">
+		<div class="tab_btn_container">
+			<ion-segment [(ngModel)]="tab" lines="none">
+				<ion-segment-button value="popular">
+					<div class="img_box">
+						<img src="assets/images/ic_popular.png">
+					</div>
+					<ion-label>
+						{{'popular'}}
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="starter">
+					<div class="img_box">
+						<img src="assets/images/ic_starter.png">
+					</div>
+					<ion-label>
+						{{'starter'}}
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="dessert">
+					<div class="img_box">
+						<img src="assets/images/ic_Dessert.png">
+					</div>
+					<ion-label>
+						{{'dessert'}}
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="fast_food">
+					<div class="img_box">
+						<img src="assets/images/ic_fastfood.png">
+					</div>
+					<ion-label>
+						{{'fast_food'}}
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="main_course">
+					<div class="img_box">
+						<img src="assets/images/ic_maincourse.png">
+					</div>
+					<ion-label>
+						{{'main_course'}}
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="beverages">
+					<div class="img_box">
+						<img src="assets/images/ic_Beverages.png">
+					</div>
+					<ion-label>
+						{{'beverages'}}
+					</ion-label>
+				</ion-segment-button>
+			</ion-segment>
+		</div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+		<div class="tab_container end" [ngSwitch]="tab">
+			<div class="item_container" *ngSwitchCase="'popular'">
+				<ion-grid style="padding: 0 !important;">
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box" >
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+          </ion-row>
+				</ion-grid>
+			</div>
+
+
+			<div class="item_container" *ngSwitchCase="'starter'">
+				<ion-grid>
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.type == 0">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box">
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+					</ion-row>
+				</ion-grid>
+			</div>
+
+			<div class="item_container" *ngSwitchCase="'dessert'">
+				<ion-grid>
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)"  size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.type == 1">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box">
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+					</ion-row>
+				</ion-grid>
+			</div>
+
+			<div class="item_container" *ngSwitchCase="'fast_food'">
+				<ion-grid>
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.type == 2">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box">
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+
+					</ion-row>
+				</ion-grid>
+			</div>
+
+			<div class="item_container" *ngSwitchCase="'main_course'">
+				<ion-grid>
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.type == 2">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box">
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+					</ion-row>
+				</ion-grid>
+			</div>
+
+			<div class="item_container" *ngSwitchCase="'beverages'">
+				<ion-grid>
+					<ion-row>
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)"  size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.type == 3">
+                <div class="item_img center_img">
+                  <img src="{{item.img}}" class="crop_img">
+                </div>
+                <div class="text_box">
+									<h2>{{item.name}}</h2>
+									<h3>${{item.price}}</h3>
+								</div>
+								<div class="option d-flex">
+									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
+									<h5 class="end">1</h5>
+								</div>
+              </div>
+            </ion-col>
+					</ion-row>
+				</ion-grid>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--Cart  Start-->
+  <!--Cart  End-->
 </ion-content>

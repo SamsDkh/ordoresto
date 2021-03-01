@@ -7,10 +7,23 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
+    path: 'item-info',
+    loadChildren: () => import('./item-info/item-info.module').then( m => m.ItemInfoPageModule),
+    data: {}
+  },
+  {
+    path: 'confirmed',
+    loadChildren: () => import('./confirmed/confirmed.module').then( m => m.ConfirmedPageModule)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({
