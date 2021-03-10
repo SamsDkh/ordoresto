@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { ItemTypeEnum } from '../Enums/ItemTypeEnum.enum';
 import { Item } from '../Models/Item';
 import {ItemService} from '../Services/Item.service';
 import {SharedService} from '../Services/shared.service';
-import {CartPageModule} from '../cart/cart.module';
 import { CartService } from '../Services/cart.service';
 import { BehaviorSubject } from 'rxjs';
 import { CartPage } from '../cart/cart.page';
+import { HttpClient } from '@angular/common/http';
+import { ConfirmedPage } from '../confirmed/confirmed.page';
 
 @Component({
   selector: 'app-home',
@@ -18,21 +19,19 @@ import { CartPage } from '../cart/cart.page';
 export class HomePage implements OnInit {
   tab = 'popular';
   viewType: string;
-  itemService: ItemService;
   items: Item[];
-  itemType: ItemTypeEnum;
+  ItemTypeEnum: typeof
+  ItemTypeEnum = ItemTypeEnum;
   selectedItem: string;
   message = 'item message';
   basket = [];
-  products = [];
   cartItemCount: BehaviorSubject<number>;
-  constructor(private route: Router, private modalController: ModalController, private shared: SharedService, private cartService: CartService) { }
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private route: Router, private http: HttpClient, private modalController: ModalController, private shared: SharedService, private cartService: CartService, private itemService: ItemService, private menu: MenuController) { }
 
   ngOnInit(): void {
-    this.itemService = new ItemService();
-    this.items = this.itemService.getItems();
-
-    this.products = this.cartService.getProducts();
+    this.itemService.getItems();
     this.basket = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
   }
@@ -42,30 +41,57 @@ export class HomePage implements OnInit {
 
   }
 
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
+
+  openEnd() {
+    this.menu.open('end');
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
+  }
+
+
+  confirmed() {
+    this.modalController.create({ component: ConfirmedPage }).then((modalElement) => {
+      modalElement.present();});
+  }
+
   setViewType(vt) {
     this.viewType = vt;
   }
+
   item_detail(itemId: Item) {
     this.shared.setMessage(itemId);
     this.route.navigate(['./item-info']);
   }
 
-  cart(vt)
-  {
-    this.viewType = vt;
-    this.route.navigate(['./cart']);
-  }
-
   async openCart()
   {
-    let modal = await this.modalController.create({
+    const modal = await this.modalController.create({
       component: CartPage,
-      cssClass: 'cart_modal'
+      cssClass: 'cart_modal',
+      componentProps: {
+        isConfirmed: false
+      }
     });
-    modal.present();
+    await modal.present();
+
+    const {data: isConfirmed, role} = await modal.onDidDismiss();
+
+    console.log(isConfirmed);
+    if (isConfirmed){
+      this.confirmed();
+    }
   }
+
   getItems(){
-    // this.items = this.itemService.getItems();
+    this.itemService.getItems();
+    console.log(this.itemService.items);
   }
 
 }

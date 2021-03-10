@@ -5,15 +5,17 @@ import { Item } from '../Models/Item';
   providedIn: 'root'
 })
 export class SharedService {
-message: Item;
-constructor() { }
+itemInfo: Item;
+
+constructor() {
+}
 
 setMessage(data){
-this.message = data;
+this.itemInfo = data;
 }
 
 getMessage(){
-  return this.message;
+  return this.itemInfo;
 }
 
 }

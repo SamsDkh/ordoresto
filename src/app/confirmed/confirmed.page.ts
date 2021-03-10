@@ -15,7 +15,7 @@ export class ConfirmedPage implements OnInit {
   setViewType(vt) {
     this.viewType = vt;
   }
-  dismiss() {
+  close(){
     this.modalController.dismiss();
   }
   home() {

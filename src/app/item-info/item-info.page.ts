@@ -20,8 +20,6 @@ export class ItemInfoPage implements OnInit {
   ngOnInit() {
    this.itemInfo = this.shared.getMessage();
    console.log(this.itemInfo.ingredients);
-
-   this.products = this.cartService.getProducts();
    this.cart = this.cartService.getCart();
    this.cartItemCount = this.cartService.getCartItemCount();
   }
