@@ -86,7 +86,7 @@
 			<div class="item_container" *ngSwitchCase="'popular'">
 				<ion-grid style="padding: 0 !important;">
 					<ion-row>
-            <ion-col *ngFor="let item of itemService.items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
               <div class="item">
                 <div class="item_img center_img">
                   <img src="{{item.img}}" class="crop_img">

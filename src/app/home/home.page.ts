@@ -19,7 +19,38 @@ import { ConfirmedPage } from '../confirmed/confirmed.page';
 export class HomePage implements OnInit {
   tab = 'popular';
   viewType: string;
-  items: Item[];
+  items: Item[] = [
+    {
+      id: '1',
+      amount: 0,
+      cooking: '8',
+      description: 'This is a description',
+      energy: '840',
+      ingredients: ['sucre', 'sel'],
+      name: 'Pizza',
+      price: 20.0,
+      serving: '2',
+      type: ItemTypeEnum.main,
+      options: ['option 1'],
+      img : 'assets/images/1.png',
+      vid : ''
+    },
+    {
+      id: '2',
+      amount: 0,
+      cooking: '8',
+      description: 'This is a description',
+      energy: '840',
+      ingredients: ['sucre', 'sel'],
+      name: 'Yaourt',
+      price: 20.0,
+      serving: '2',
+      type: ItemTypeEnum.dessert,
+      options: ['option 1'],
+      img : 'assets/images/2.png',
+      vid : ''
+    }
+  ];
   ItemTypeEnum: typeof
   ItemTypeEnum = ItemTypeEnum;
   selectedItem: string;
@@ -28,7 +59,9 @@ export class HomePage implements OnInit {
   cartItemCount: BehaviorSubject<number>;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private route: Router, private http: HttpClient, private modalController: ModalController, private shared: SharedService, private cartService: CartService, private itemService: ItemService, private menu: MenuController) { }
+  constructor(private route: Router, private http: HttpClient, private modalController: ModalController,
+    private shared: SharedService, private cartService: CartService,
+    private itemService: ItemService, private menu: MenuController) { }
 
   ngOnInit(): void {
     this.itemService.getItems();
@@ -80,9 +113,7 @@ export class HomePage implements OnInit {
       }
     });
     await modal.present();
-
     const {data: isConfirmed, role} = await modal.onDidDismiss();
-
     console.log(isConfirmed);
     if (isConfirmed){
       this.confirmed();
