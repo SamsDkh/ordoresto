@@ -15,7 +15,7 @@ constructor(private http: HttpClient) {
 
 
 public getItems(){
-  this.http.get<Item[]>('http://productstaging.eu-west-3.elasticbeanstalk.com/Product').subscribe(result => {
+  this.http.get<Item[]>('https://productstaging.eu-west-3.elasticbeanstalk.com/Product').subscribe(result => {
     this.items = result;
     console.log('result : ',this.items);
   }, err => console.log('Error : ', err));
