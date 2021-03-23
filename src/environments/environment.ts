@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+};
+
+export const devURL = {
+  productService : {
+    baseUrl : 'https://localhost:44378/Product/',
+    getProductsById : 'GetById/',
+    getProductsByEstablishmentId : 'GetByEstablishmentId/',
+    addProduct: 'Add/',
+    removeProductsById : 'Delete/'
+  },
 };
 
 /*
