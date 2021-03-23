@@ -6,9 +6,9 @@ export const environment = {
   production: false,
 };
 
-export const devURL = {
+export const servicesUrl = {
   productService : {
-    baseUrl : 'https://localhost:44378/Product/',
+    baseUrl : 'https://productstaging.eu-west-3.elasticbeanstalk.com/Product/',
     getProductsById : 'GetById/',
     getProductsByEstablishmentId : 'GetByEstablishmentId/',
     addProduct: 'Add/',

@@ -3,10 +3,10 @@ export const environment = {
 };
 
 
-export const prodURL = {
-  productBaseUrl : 'https://localhost:49157/Product',
-  getProductsById : '/GetById/',
-  getProductsByEstablishmentId : '/GetByEstablishmentId/',
-  addProduct: '/Add/',
-  removeProductsById : '/Delete/',
+export const servicesUrl = {
+  baseUrl : 'https://localhost:49157/Product',
+  getProductsById : 'GetById/',
+  getProductsByEstablishmentId : 'GetByEstablishmentId/',
+  addProduct: 'Add/',
+  removeProductsById : 'Delete/',
 };
