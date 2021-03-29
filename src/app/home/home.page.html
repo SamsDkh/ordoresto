@@ -30,69 +30,29 @@
 <ion-content class="bg_color">
 	<div class="container d-flex">
 		<div class="tab_btn_container">
-			<ion-segment [(ngModel)]="tab" lines="none">
-				<ion-segment-button value="popular">
+			<ion-segment [(ngModel)]="type" lines="none">
+				<ion-segment-button *ngFor="let type of types; index as i" value={{type}}>
 					<div class="img_box">
-						<img src="assets/images/ic_popular.png">
+						<img src="assets/images/ic_{{type}}.png">
 					</div>
 					<ion-label>
-						{{'popular'}}
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="starter">
-					<div class="img_box">
-						<img src="assets/images/ic_starter.png">
-					</div>
-					<ion-label>
-						{{'starter'}}
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="dessert">
-					<div class="img_box">
-						<img src="assets/images/ic_Dessert.png">
-					</div>
-					<ion-label>
-						{{'dessert'}}
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="fast_food">
-					<div class="img_box">
-						<img src="assets/images/ic_fastfood.png">
-					</div>
-					<ion-label>
-						{{'fast_food'}}
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="main_course">
-					<div class="img_box">
-						<img src="assets/images/ic_maincourse.png">
-					</div>
-					<ion-label>
-						{{'main_course'}}
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="beverages">
-					<div class="img_box">
-						<img src="assets/images/ic_Beverages.png">
-					</div>
-					<ion-label>
-						{{'beverages'}}
+						{{type}}
 					</ion-label>
 				</ion-segment-button>
 			</ion-segment>
 		</div>
 
-		<div class="tab_container end" [ngSwitch]="tab">
-			<div class="item_container" *ngSwitchCase="'popular'">
+		<div class="tab_container end" [ngSwitch]="type">
+			<div *ngFor="let type of types">
+			<div class="item_container" *ngSwitchCase="type">
 				<ion-grid style="padding: 0 !important;">
 					<ion-row>
-            <ion-col *ngFor="let item of itemService.items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item">
+            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+              <div class="item" *ngIf="item.typeName == type">
                 <div class="item_img center_img">
                   <img src="{{item.img}}" class="crop_img">
                 </div>
                 <div class="text_box" >
-                  <h2>{{ItemTypeEnum[item.type]}}</h2>
 									<h2>{{item.name}}</h2>
 									<h3>${{item.price}}</h3>
 								</div>
@@ -105,118 +65,7 @@
           </ion-row>
 				</ion-grid>
 			</div>
-
-
-			<div class="item_container" *ngSwitchCase="'starter'">
-				<ion-grid>
-					<ion-row>
-            <ion-col *ngFor="let item of itemService.items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item" *ngIf="ItemTypeEnum[item.type] == 'starter'">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box">
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
-								<div class="option d-flex">
-									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
-									<h5 class="end">1</h5>
-								</div>
-              </div>
-            </ion-col>
-					</ion-row>
-				</ion-grid>
-			</div>
-
-			<div class="item_container" *ngSwitchCase="'dessert'">
-				<ion-grid>
-					<ion-row>
-            <ion-col *ngFor="let item of itemService.items;; index as i" (click)="item_detail(item)"  size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item" *ngIf="ItemTypeEnum[item.type] ==  'dessert'">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box">
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
-								<div class="option d-flex">
-									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
-									<h5 class="end">1</h5>
-								</div>
-              </div>
-            </ion-col>
-					</ion-row>
-				</ion-grid>
-			</div>
-
-			<div class="item_container" *ngSwitchCase="'fast_food'">
-				<ion-grid>
-					<ion-row>
-            <ion-col *ngFor="let item of itemService.items;; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item"  *ngIf="ItemTypeEnum[item.type] ==  'other'">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box">
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
-								<div class="option d-flex">
-									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
-									<h5 class="end">1</h5>
-								</div>
-              </div>
-            </ion-col>
-
-					</ion-row>
-				</ion-grid>
-			</div>
-
-			<div class="item_container" *ngSwitchCase="'main_course'">
-				<ion-grid>
-					<ion-row>
-            <ion-col *ngFor="let item of itemService.items;; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item"  *ngIf="ItemTypeEnum[item.type] ==  'main'">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box">
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
-								<div class="option d-flex">
-									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
-									<h5 class="end">1</h5>
-								</div>
-              </div>
-            </ion-col>
-					</ion-row>
-				</ion-grid>
-			</div>
-
-			<div class="item_container" *ngSwitchCase="'beverages'">
-				<ion-grid>
-					<ion-row>
-            <ion-col *ngFor="let item of itemService.items;; index as i" (click)="item_detail(item)"  size="12" size-lg="3" size-md="4" size-sm="6">
-              <div class="item"  *ngIf="ItemTypeEnum[item.type] ==  'beverage'">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box">
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
-								<div class="option d-flex">
-									<ion-icon class="zmdi zmdi-minus-circle-outline"></ion-icon>
-									<h5 class="end">1</h5>
-								</div>
-              </div>
-            </ion-col>
-					</ion-row>
-				</ion-grid>
-			</div>
+		</div>
 		</div>
 	</div>
 

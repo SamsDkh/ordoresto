@@ -4,6 +4,7 @@ import { ItemTypeEnum } from '../Enums/ItemTypeEnum.enum';
 import { Item } from '../Models/Item';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from '../Models/Order';
+import { OrderService } from '../Services/order.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class CartService {
   private cart = [];
   private cartItemCount = new BehaviorSubject(0);
   private totalCart: number;
-
-  constructor(private http: HttpClient) {
+  private orders : Order[];
+  constructor(private http: HttpClient, private orderService: OrderService) {
     this.http = http;
   }
 
@@ -27,26 +28,28 @@ export class CartService {
     return this.cartItemCount;
   }
 
-  addProduct(item){
+  addProduct(item : Item){
     let added = false;
-    console.log('item id : ' + item.id);
+    console.log('item to add : ',item);
     for(const p of this.cart){
-      if (p.id === item.id){
+      if (p.id === item.productId){
         p.amount += 1;
         added = true;
         break;
       }
     }
     if (!added){
-      this.cart.push(item);
+      item.amount = 0;
       item.amount += 1;
+      console.log('added item : ', item);
+      this.cart.push(item);
     }
     this.cartItemCount.next(this.cartItemCount.value + 1);
   }
 
-  decreaseProduct(item){
+  decreaseProduct(item : Item){
     for(const [index, p] of this.cart.entries()){
-      if(p.id === item.id){
+      if(p.id === item.productId){
         p.amount -= 1;
         if (p.amount === 0){
           this.cart.splice(index, 1);
@@ -56,9 +59,9 @@ export class CartService {
     this.cartItemCount.next(this.cartItemCount.value - 1);
   }
 
-  removeProduct(item){
+  removeProduct(item : Item){
     for(const [index, p] of this.cart.entries()){
-      if(p.id === item.id){
+      if(p.id === item.productId){
           this.cartItemCount.next(this.cartItemCount.value - p.amount);
           this.cart.splice(index, 1);
       }
@@ -75,19 +78,24 @@ export class CartService {
   }
 
   checkoutCart(){
-    const headers = new HttpHeaders().set('content-type', 'application/json');
+    this.orders = [];
     const newOrder = new Order();
     newOrder.TotalWithTax = this.totalCart;
     newOrder.ItemAmount = this.cartItemCount.value;
-    newOrder.ItemsOrder = [];
+    newOrder.Total = this.totalCart;
+    newOrder.EstablishmentId = this.cart[0].establishmentId;
+    newOrder.Items = [];
     this.cart.forEach(element => {
-      newOrder.ItemsOrder.push(element);
+      console.log('elm : ', element);
+      newOrder.Items.push(element);
     });
     console.log(newOrder);
-    this.http.post<Order>('https://localhost:49226/Order', newOrder, {headers}).toPromise().then(result =>
-    {
-      console.log(result);
-    });
+    this.orderService.addOrder(newOrder).subscribe(order => this.orders.push(order));
+    console.log(this.orders);
+    // this.http.post<Order>('https://localhost:49226/Order', newOrder, {headers}).toPromise().then(result =>
+    // {
+    //   console.log(result);
+    // });
   }
 
 }

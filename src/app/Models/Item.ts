@@ -1,7 +1,7 @@
 import { ItemTypeEnum } from '../Enums/ItemTypeEnum.enum';
 
 export class Item {
-  id: string;
+  productId: string;
   name: string;
   price: number;
   description: string;
@@ -14,4 +14,6 @@ export class Item {
   img: string;
   vid: string;
   amount: number;
+  establishmentId: string;
+  typeName: string;
 }

@@ -17,6 +17,7 @@ export class ItemInfoPage implements OnInit {
   cartItemCount: BehaviorSubject<number>;
   constructor(private shared: SharedService, private modalController: ModalController, private cartService: CartService) { }
   itemInfo: Item;
+  
   ngOnInit() {
    this.itemInfo = this.shared.getMessage();
    console.log(this.itemInfo.ingredients);
@@ -32,7 +33,6 @@ export class ItemInfoPage implements OnInit {
 
   addToCart(itemInfo){
     this.cartService.addProduct(itemInfo);
-
   }
 
   confirmed() {

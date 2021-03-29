@@ -19,52 +19,21 @@ import { ConfirmedPage } from '../confirmed/confirmed.page';
 export class HomePage implements OnInit {
   tab = 'popular';
   viewType: string;
-  items: Item[] = [
-    {
-      id: '1',
-      amount: 0,
-      cooking: '8',
-      description: 'This is a description',
-      energy: '840',
-      ingredients: ['sucre', 'sel'],
-      name: 'Pizza',
-      price: 20.0,
-      serving: '2',
-      type: ItemTypeEnum.main,
-      options: ['option 1'],
-      img : 'assets/images/1.png',
-      vid : ''
-    },
-    {
-      id: '2',
-      amount: 0,
-      cooking: '8',
-      description: 'This is a description',
-      energy: '840',
-      ingredients: ['sucre', 'sel'],
-      name: 'Yaourt',
-      price: 20.0,
-      serving: '2',
-      type: ItemTypeEnum.dessert,
-      options: ['option 1'],
-      img : 'assets/images/2.png',
-      vid : ''
-    }
-  ];
+  items: Item[];
   ItemTypeEnum: typeof
   ItemTypeEnum = ItemTypeEnum;
   selectedItem: string;
   message = 'item message';
   basket = [];
   cartItemCount: BehaviorSubject<number>;
-
+  types: string[];
   // tslint:disable-next-line:max-line-length
   constructor(private route: Router, private http: HttpClient, private modalController: ModalController,
     private shared: SharedService, private cartService: CartService,
     private itemService: ItemService, private menu: MenuController) { }
 
   ngOnInit(): void {
-    this.itemService.getItems();
+    this.getItems();
     this.basket = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
   }
@@ -113,7 +82,7 @@ export class HomePage implements OnInit {
       }
     });
     await modal.present();
-    const {data: isConfirmed, role} = await modal.onDidDismiss();
+    const {data: isConfirmed} = await modal.onDidDismiss();
     console.log(isConfirmed);
     if (isConfirmed){
       this.confirmed();
@@ -121,8 +90,16 @@ export class HomePage implements OnInit {
   }
 
   getItems(){
-    this.itemService.getItems();
-    console.log(this.itemService.items);
+    this.itemService.getItems().then(res => {
+      this.items = res;
+      this.types = [];
+      this.types.push('Popular');
+      console.log('items = ',this.items);
+      this.items.forEach(element => {
+        this.types.push(element.typeName);
+      });
+      console.log('types = ', this.types);
+    });
   }
 
 }
