@@ -8,15 +8,16 @@ export const environment = {
 
 export const servicesUrl = {
   productService : {
-    // baseUrl : 'https://productstaging.eu-west-3.elasticbeanstalk.com/Product/',
-    baseUrl : 'https://localhost:5001/Product/',
+    baseUrl : 'https://productstaging.eu-west-3.elasticbeanstalk.com/Product/',
+    // baseUrl : 'https://localhost:5001/Product/',
     getProductsById : 'GetById/',
     getProductsByEstablishmentId : 'GetByEstablishmentId/',
     addProduct: 'Add/',
     removeProductsById : 'Delete/'
   },
   orderservice : {
-    baseUrl : 'https://localhost:44390/',
+    baseUrl : 'http://orderapistaging.eu-west-3.elasticbeanstalk.com/',
+    // baseUrl : 'https://localhost:44390/',
     addOrder: 'api/Order'
   }
 };

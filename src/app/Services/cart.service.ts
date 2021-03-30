@@ -11,7 +11,7 @@ import { OrderService } from '../Services/order.service';
 })
 export class CartService {
 
-  private cart = [];
+  private cart : Item[] = [];
   private cartItemCount = new BehaviorSubject(0);
   private totalCart: number;
   private orders : Order[];
@@ -32,7 +32,7 @@ export class CartService {
     let added = false;
     console.log('item to add : ',item);
     for(const p of this.cart){
-      if (p.id === item.productId){
+      if (p.productId === item.productId){
         p.amount += 1;
         added = true;
         break;
@@ -49,7 +49,7 @@ export class CartService {
 
   decreaseProduct(item : Item){
     for(const [index, p] of this.cart.entries()){
-      if(p.id === item.productId){
+      if(p.productId === item.productId){
         p.amount -= 1;
         if (p.amount === 0){
           this.cart.splice(index, 1);
@@ -61,7 +61,7 @@ export class CartService {
 
   removeProduct(item : Item){
     for(const [index, p] of this.cart.entries()){
-      if(p.id === item.productId){
+      if(p.productId === item.productId){
           this.cartItemCount.next(this.cartItemCount.value - p.amount);
           this.cart.splice(index, 1);
       }
@@ -90,12 +90,14 @@ export class CartService {
       newOrder.Items.push(element);
     });
     console.log(newOrder);
-    this.orderService.addOrder(newOrder).subscribe(order => this.orders.push(order));
+    
+    this.orderService.addOrder(newOrder).then(res => {
+      const result = res;
+      console.log('result : ', result);
+    });
+
     console.log(this.orders);
-    // this.http.post<Order>('https://localhost:49226/Order', newOrder, {headers}).toPromise().then(result =>
-    // {
-    //   console.log(result);
-    // });
+    this.cartItemCount = new BehaviorSubject(0);
   }
 
 }

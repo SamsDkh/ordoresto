@@ -12,31 +12,34 @@ export class OrderService {
 
   private orderUrl = servicesUrl.orderservice.baseUrl;
   private postUrl = servicesUrl.orderservice.addOrder;
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  
   constructor(private http: HttpClient) { }
 
-  addOrder(order: Order): Observable<Order> {
-    console.log('reaching ', this.orderUrl+this.postUrl);
-    return this.http.post<Order>(this.orderUrl+this.postUrl, order, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: ${error.error}`);
+  public async addOrder(order: Order){
+    try {
+      const data = await this.postHttpAsync(this.orderUrl+this.postUrl, order);
+    console.log('data : ',data);
+    return data;
+    } catch (error) {
+      console.log('error : ',error);
     }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
+   }
+  
+   public async postHttpAsync<T>(request: RequestInfo, data: T): Promise<T>{
+    const response = await fetch(request, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    try {
+      const body = await response.json();
+      return body;
+    } catch (error) {}
+    if(!response.ok){
+      throw new Error(response.statusText);
+    }
+   } 
 }

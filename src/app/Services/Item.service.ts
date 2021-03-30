@@ -18,7 +18,8 @@ constructor(private http: HttpClient) {
 
 public async getItems(){
   try {
-    const data = await this.getHttpAsync<Item[]>(this.productServiceURL+this.getProductByEstablishmentId+'6d7abca0-9d40-4559-8528-95b0cf5ee1cb');
+    const establishmentId = '6d7abca0-9d40-4559-8528-95b0cf5ee1cb';
+    const data = await this.getHttpAsync<Item[]>(this.productServiceURL+this.getProductByEstablishmentId+establishmentId);
   console.log('data : ',data);
   return data;
   } catch (error) {
@@ -28,6 +29,7 @@ public async getItems(){
 
  public async getHttpAsync<T>(request: RequestInfo): Promise<T>{
   const response = await fetch(request);
+  
   try {
     const body = await response.json();
     return body;

@@ -20,7 +20,7 @@ export class ItemInfoPage implements OnInit {
   
   ngOnInit() {
    this.itemInfo = this.shared.getMessage();
-   console.log(this.itemInfo.ingredients);
+   console.log(this.itemInfo);
    this.cart = this.cartService.getCart();
    this.cartItemCount = this.cartService.getCartItemCount();
   }
@@ -31,7 +31,7 @@ export class ItemInfoPage implements OnInit {
 
   item_detail() { }
 
-  addToCart(itemInfo){
+  addToCart(itemInfo : Item){
     this.cartService.addProduct(itemInfo);
   }
 

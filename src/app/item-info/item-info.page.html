@@ -37,14 +37,86 @@
 				<ion-grid>
 					<ion-row>
 						<ion-col size="12" size-lg="6" size-md="6" size-sm="6" style="padding-bottom: 0;">
-							<ion-card>
-								<h2>{{'description'}}</h2>
-								<p>
-                  {{itemInfo.description}}
-								</p>
-							</ion-card>
+							<div class="item-info">
+								<ion-card>
+									<ion-slides pager="true">
+										<ion-slide>
+											<div class="img_box center_img">
+												<img src="assets/images/1.png" class="crop_img">
+											</div>
+										</ion-slide>
+										<ion-slide>
+											<div class="img_box center_img">
+												<img src="assets/images/1.png" class="crop_img">
+											</div>
+										</ion-slide>
+										<ion-slide>
+											<div class="img_box center_img">
+												<img src="assets/images/1.png" class="crop_img">
+											</div>
+										</ion-slide>
+										<ion-slide>
+											<div class="img_box center_img">
+												<img src="assets/images/1.png" class="crop_img">
+											</div>
+										</ion-slide>
+									</ion-slides>
+									<div class="text_box">
+										<h1>{{itemInfo.name}}</h1>
+										<h3 class="d-flex"><span>{{itemInfo.type}}</span> <span
+												class="end">${{itemInfo.price}}</span></h3>
+									</div>
+									<div class="text_box">
+									<ion-card size="12" size-lg="6" size-md="6" size-sm="6" style="padding-bottom: 0;">
+										<h2>{{'description'}}</h2>
+										<p>
+						  					{{itemInfo.description}}
+										</p>
+									</ion-card>
+								</div>
+								<div class="text_box">
 
-							<ion-card class="video" *ngIf="itemInfo.vid != ''">
+								<ion-card class="ingredients">
+									<h2>{{'Ingredients'}}</h2>
+									<p *ngFor="let ing of itemInfo.ingredients; index as i">
+										<span>{{ing}}</span>
+					</p>
+								</ion-card>
+								</div>
+								<ion-button size="large" class="btn" (click)="addToCart(itemInfo)">Ajouter</ion-button>
+									<ion-list lines="none" *ngIf="itemInfo.options != null">
+										<h2>{{'add_options'}}</h2>
+										<ion-item>
+											<ion-checkbox slot="start"></ion-checkbox>
+											<ion-label>
+												<h4 class="d-flex">Extra Cheese <span class="end">$5.00</span></h4>
+											</ion-label>
+										</ion-item>
+										<ion-item>
+											<ion-checkbox slot="start"></ion-checkbox>
+											<ion-label>
+												<h4 class="d-flex">Extra Honey <span class="end">$3.00</span></h4>
+											</ion-label>
+										</ion-item>
+										<ion-item>
+											<ion-checkbox slot="start"></ion-checkbox>
+											<ion-label>
+												<h4 class="d-flex">Extra Mayonnaise <span class="end">$4.00</span></h4>
+											</ion-label>
+										</ion-item>
+										<ion-item>
+											<ion-checkbox slot="start"></ion-checkbox>
+											<ion-label>
+												<h4 class="d-flex">Extra Sugar <span class="end">$2.00</span></h4>
+											</ion-label>
+										</ion-item>
+									</ion-list>
+
+								</ion-card>
+							</div>
+						</ion-col>
+						<ion-col size="12" size-lg="6" size-md="6" size-sm="6" style="padding-bottom: 0;">
+							<ion-card class="video" *ngIf="itemInfo.vid != null">
 								<div class="video_img center_img">
 									<img src="assets/images/video_thum.png" class="crop_img">
 								</div>
@@ -90,79 +162,10 @@
 									</ion-row>
 								</ion-grid>
 							</div>
-
-							<ion-card class="ingredients">
-								<h2>{{'Ingredients'}}</h2>
-								<p *ngFor="let ing of itemInfo.ingredients; index as i">
-									<span>{{ing}}</span>
-                </p>
-							</ion-card>
 						</ion-col>
 
 
-						<ion-col size="12" size-lg="6" size-md="6" size-sm="6" style="padding-bottom: 0;">
-							<div class="item-info">
-								<ion-card>
-									<ion-slides pager="true">
-										<ion-slide>
-											<div class="img_box center_img">
-												<img src="assets/images/1.png" class="crop_img">
-											</div>
-										</ion-slide>
-										<ion-slide>
-											<div class="img_box center_img">
-												<img src="assets/images/1.png" class="crop_img">
-											</div>
-										</ion-slide>
-										<ion-slide>
-											<div class="img_box center_img">
-												<img src="assets/images/1.png" class="crop_img">
-											</div>
-										</ion-slide>
-										<ion-slide>
-											<div class="img_box center_img">
-												<img src="assets/images/1.png" class="crop_img">
-											</div>
-										</ion-slide>
-									</ion-slides>
-									<div class="text_box">
-										<h1>{{itemInfo.name}}</h1>
-										<h3 class="d-flex"><span>{{itemInfo.type}}</span> <span
-												class="end">${{itemInfo.price}}</span></h3>
-									</div>
-
-									<ion-list lines="none" *ngIf="itemInfo.options != null">
-										<h2>{{'add_options'}}</h2>
-										<ion-item>
-											<ion-checkbox slot="start"></ion-checkbox>
-											<ion-label>
-												<h4 class="d-flex">Extra Cheese <span class="end">$5.00</span></h4>
-											</ion-label>
-										</ion-item>
-										<ion-item>
-											<ion-checkbox slot="start"></ion-checkbox>
-											<ion-label>
-												<h4 class="d-flex">Extra Honey <span class="end">$3.00</span></h4>
-											</ion-label>
-										</ion-item>
-										<ion-item>
-											<ion-checkbox slot="start"></ion-checkbox>
-											<ion-label>
-												<h4 class="d-flex">Extra Mayonnaise <span class="end">$4.00</span></h4>
-											</ion-label>
-										</ion-item>
-										<ion-item>
-											<ion-checkbox slot="start"></ion-checkbox>
-											<ion-label>
-												<h4 class="d-flex">Extra Sugar <span class="end">$2.00</span></h4>
-											</ion-label>
-										</ion-item>
-									</ion-list>
-
-									<ion-button size="large" class="btn" (click)="addToCart(itemInfo)">Ajouter</ion-button>
-								</ion-card>
-							</div>
-						</ion-col>
+						
 					</ion-row>
 				</ion-grid>
 			</div>

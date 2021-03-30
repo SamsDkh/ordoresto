@@ -40,7 +40,12 @@ export class HomePage implements OnInit {
 
   addToCart(item)
   {
+    this.cartService.addProduct(item);
+  }
 
+  decreaseFromCart(item)
+  {
+    this.cartService.decreaseProduct(item);
   }
 
   openFirst() {
@@ -69,7 +74,9 @@ export class HomePage implements OnInit {
 
   item_detail(itemId: Item) {
     this.shared.setMessage(itemId);
-    this.route.navigate(['./item-info']);
+    this.route.navigate(['./item-info']).then(res => {
+      console.log('fin');
+    });
   }
 
   async openCart()
@@ -85,7 +92,10 @@ export class HomePage implements OnInit {
     const {data: isConfirmed} = await modal.onDidDismiss();
     console.log(isConfirmed);
     if (isConfirmed){
+      this.cartItemCount = this.cartService.getCartItemCount();
+      console.log('cartitemcount : ',this.cartItemCount);
       this.confirmed();
+      this.getItems();
     }
   }
 
