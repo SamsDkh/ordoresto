@@ -18,7 +18,7 @@ constructor(private http: HttpClient) {
 
 public async getItems(){
   try {
-    const establishmentId = '6d7abca0-9d40-4559-8528-95b0cf5ee1cb';
+    const establishmentId = 'dfe56594-0a48-4107-a9f5-2aabdc87e836';
     const data = await this.getHttpAsync<Item[]>(this.productServiceURL+this.getProductByEstablishmentId+establishmentId);
   console.log('data : ',data);
   return data;

@@ -26,7 +26,8 @@ export class HomePage implements OnInit {
   message = 'item message';
   basket = [];
   cartItemCount: BehaviorSubject<number>;
-  types: string[];
+  types: Set<string>;
+  cartEnable: boolean = false;
   // tslint:disable-next-line:max-line-length
   constructor(private route: Router, private http: HttpClient, private modalController: ModalController,
     private shared: SharedService, private cartService: CartService,
@@ -102,12 +103,14 @@ export class HomePage implements OnInit {
   getItems(){
     this.itemService.getItems().then(res => {
       this.items = res;
-      this.types = [];
-      this.types.push('Popular');
+      this.types = new Set();
+      const typesDuplicate = [];
+      this.types.add('Popular');
       console.log('items = ',this.items);
       this.items.forEach(element => {
-        this.types.push(element.typeName);
+        typesDuplicate.push(element.typeName);
       });
+      this.types = new Set(typesDuplicate);
       console.log('types = ', this.types);
     });
   }

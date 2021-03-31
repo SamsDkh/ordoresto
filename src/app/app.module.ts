@@ -9,9 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { CartPageModule } from './cart/cart.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmedPageModule } from './confirmed/confirmed.module';
-import {CartPage} from './cart/cart.page';
+import { CartPage} from './cart/cart.page';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CartPage],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ConfirmedPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

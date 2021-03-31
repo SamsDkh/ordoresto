@@ -14,6 +14,6 @@ import { CartPageModule } from '../cart/cart.module';
     IonicModule,
     HomePageRoutingModule
     ],
-  declarations: [HomePage, CartPage]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

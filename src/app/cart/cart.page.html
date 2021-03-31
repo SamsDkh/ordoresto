@@ -1,5 +1,84 @@
-<ion-content fullscreen>
-  <div class="ion-text-end">
+<ion-menu side="end" menuId="cart-menu" content-id="cart">
+	<ion-content fullscreen>
+		<div class="cart_container active">
+      <div class="container">
+        <div class="cart_header d-flex">
+          <h4 class="ion-text-center end">Nombre d'article ({{itemAmount}})</h4>
+        </div>
+        <ion-list lines="none">
+          <ion-item *ngFor="let i of cart" class="ion-text-wrap">
+            <div class="item_inner d-flex">
+              <div class="item_img center_img">
+                <img src="{{i.img}}" class="crop_img">
+              </div>
+              <div class="item_details">
+                <h2>{{i.name}}</h2>
+                <div class="d-flex">
+                  <div class="add-remove d-flex" style="padding: 0%;">
+                    <button class="button icon" style="background: transparent;" (click)="decreaseCartItem(i)">
+                      <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+                    </button>
+                    <strong class="ion-text-center">{{i.amount}}</strong>
+                    <button class="button icon" style="background: transparent;" (click)="increaseCarItem(i)">
+                      <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+                    </button>
+                  </div>
+                  <h3 class="end ion-text-end">{{ i.amount * i.price | currency:'USD'}}</h3>
+                </div>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+        <ion-button class="btn" (click)="checkout()">
+          Je commande
+        </ion-button>
+      </div>
+        </div>
+	</ion-content>
+</ion-menu>
+<ion-router-outlet id="cart"></ion-router-outlet>
+<!-- <ion-content fullscreen>
+  <div class="cart_container active">
+<div class="container">
+  <div class="cart_header d-flex">
+    <h4 class="ion-text-center end">Nombre d'article ({{itemAmount}})</h4>
+  </div>
+  <ion-list lines="none">
+    <ion-item *ngFor="let i of cart" class="ion-text-wrap">
+      <div class="item_inner d-flex">
+        <div class="item_img center_img">
+          <img src="{{i.img}}" class="crop_img">
+        </div>
+        <div class="item_details">
+          <h2>{{i.name}}</h2>
+          <div class="d-flex">
+            <div class="add-remove d-flex" style="padding: 0%;">
+              <button class="button icon" style="background: transparent;" (click)="decreaseCartItem(i)">
+                <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+              </button>
+              <strong class="ion-text-center">{{i.amount}}</strong>
+              <button class="button icon" style="background: transparent;" (click)="increaseCarItem(i)">
+                <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+              </button> -->
+              <!-- <ion-button fill="clear" (click)="decreaseCartItem(i)">
+                <ion-icon name="remove-outline" slot="icon-only"></ion-icon>
+              </ion-button> -->
+              <!-- <ion-button fill="clear" (click)="increaseCarItem(i)">
+                <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+              </ion-button>             -->
+            <!-- </div>
+            <h3 class="end ion-text-end">{{ i.amount * i.price | currency:'USD'}}</h3>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-button size="medium"  class="btn" (click)="checkout()">
+    Je commande
+  </ion-button>
+</div>
+  </div> -->
+  <!-- <div class="ion-text-end">
     <ion-button (click)="close()" fill="clear" color="dark">
       <ion-icon name="close" slot="start"></ion-icon>
     </ion-button>
@@ -58,5 +137,5 @@
     <ion-button expand="full" (click)="checkout()">
       Checkout
     </ion-button>
-  </div>
-</ion-content>
+  </div> -->
+<!-- </ion-content> -->

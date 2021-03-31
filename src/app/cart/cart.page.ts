@@ -15,6 +15,7 @@ export class CartPage implements OnInit {
   params: Params;
   viewType: string;
   cart: Item[] = [];
+  itemAmount: number;
   // @Input() item: string;
   isConfirmed: boolean;
 
@@ -25,6 +26,7 @@ export class CartPage implements OnInit {
   ngOnInit() {
     this.params = this.route.snapshot.params;
     this.cart = this.cartService.getCart();
+    this.itemAmount = this.cartService.getCartItemCount().value;
     console.log(`${this.isConfirmed}`);
   }
 
