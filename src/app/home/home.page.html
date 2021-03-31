@@ -47,9 +47,9 @@
 			<div class="item_container" *ngSwitchCase="type">
 				<ion-grid style="padding: 0 !important;">
 					<ion-row>
-            <ion-col *ngFor="let item of items; index as i" (click)="item_detail(item)" size="12" size-lg="3" size-md="4" size-sm="6">
+            <ion-col *ngFor="let item of items; index as i"  size="12" size-lg="3" size-md="4" size-sm="6">
 				<div *ngIf="item.typeName == type">
-              <div class="item" *ngIf="item.amount == 0 || item.amount == null">
+              <div class="item" *ngIf="item.amount == 0 || item.amount == null" (click)="item_detail(item)">
                 <div class="item_img center_img">
                   <img src="{{item.img}}" class="crop_img">
                 </div>
@@ -59,20 +59,22 @@
 								</div>
               </div>
 			  <div class="item active" *ngIf="item.amount >= 1">
-                <div class="item_img center_img">
-                  <img src="{{item.img}}" class="crop_img">
-                </div>
-                <div class="text_box" >
-									<h2>{{item.name}}</h2>
-									<h3>${{item.price}}</h3>
-								</div>
+				  <div (click)="item_detail(item)">
+					<div class="item_img center_img">
+						<img src="{{item.img}}" class="crop_img">
+					  </div>
+					  <div class="text_box">
+						<h2>{{item.name}}</h2>
+						<h3>${{item.price}}</h3>
+					</div>
+				  </div>
 								<div class="option d-flex">
 									<ion-button size="small" fill="clear" (click)="decreaseFromCart(item)">
 										<ion-icon slot="icon-only" name="remove-outline"></ion-icon>
 									</ion-button>
 									<ion-button size="small" fill="clear" (click)="addToCart(item)">
-									<ion-icon name="add-outline"></ion-icon>
-								</ion-button>
+										<ion-icon name="add-outline"></ion-icon>
+									</ion-button>
 									<h5 class="end">{{item.amount}}</h5>
 								</div>
               </div>
